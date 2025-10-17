@@ -23,8 +23,6 @@ void createPassword(char* pwd) {
 
     int random;
 
-    srand(time(NULL));
-
     random = rand() % 3;
 
     for (int i = 0; i < PWD_SIZE; i++) {
@@ -70,6 +68,7 @@ int main() {
                 char* new_pwd = (char*)malloc(sizeof(char) * PWD_SIZE);
 
                 printf("CREATE\n");
+                srand(time(NULL));
                 createPassword(new_pwd);
 
                 option = 0;
