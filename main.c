@@ -3,8 +3,10 @@
 #include <string.h>
 #include <time.h>
 
-#define LIST "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()"
+#define CHARS "abcdefghijklmnopwqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" // 52
+#define NUMS "1234567890" // 10
 #define PWD_SIZE 18
+#define SYMBOLS "!@#$%^&*()" // 10
 
 /* TODO
  * STORE PASSWORD WITH NAME
@@ -19,11 +21,26 @@ void createPassword(char* pwd) {
         exit(EXIT_FAILURE);
     }
 
-    int rand_int;
+    int random;
+
+    srand(time(NULL));
+
+    random = rand() % 3;
 
     for (int i = 0; i < PWD_SIZE; i++) {
-        rand_int = rand() % 73;
-        pwd[i] = LIST[rand_int];
+        if (random == 0) {
+            pwd[i] = CHARS[rand() % 52];
+            random = rand() % 3;
+            continue;
+        } else if (random == 1) {
+            pwd[i] = NUMS[rand() % 10];
+            random = rand() % 3;
+            continue;
+        } else if (random == 2) {
+            pwd[i] = SYMBOLS[rand() % 10];
+            random = rand() % 3;
+            continue;
+        }
     }
 
     printf("%s\n", pwd);
@@ -50,10 +67,9 @@ int main() {
 
         switch (option) {
             case 1:
-                char* new_pwd = (char*)malloc(sizeof(char) * PWD_SIZE + 1);
+                char* new_pwd = (char*)malloc(sizeof(char) * PWD_SIZE);
 
                 printf("CREATE\n");
-                srand(time(NULL));
                 createPassword(new_pwd);
 
                 option = 0;
