@@ -3,9 +3,15 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+
 #define MAJOR 0
 #define MINOR 1
-#define PATCH 1
+#define PATCH 2
 #define PWD_SIZE 18
 
 /* TODO
@@ -17,6 +23,7 @@
    MASTER PASSWORD
    ENCRYPTION
    PROFIT */
+
 
 void createPassword(char* pwd)
 {
@@ -40,13 +47,15 @@ void createPassword(char* pwd)
                     continue;
                 }
         }
-
-        printf("%s\n", pwd);
-        free(pwd);
 }
 
 int main(int argc, char* argv[])
 {
+        if (argc <= 1) {
+                printf("Not a command, please use pwdmgr -h for more info\n");
+                exit(0);
+        }
+
         for (int i = 1; i < argc; i++) {
                 if (strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--create") == 0) {
                         char* new_pwd = (char*)malloc(sizeof(char) * PWD_SIZE);
@@ -59,6 +68,8 @@ int main(int argc, char* argv[])
                         printf("Generating Password: ");
                         srand(time(NULL));
                         createPassword(new_pwd);
+                        printf("%s\n", new_pwd);
+                        free(new_pwd);
                 } else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--delete") == 0) {
                         char* name = (char*)malloc(sizeof(char) * 32);
                         printf("Input name to delete: ");
@@ -112,10 +123,9 @@ int main(int argc, char* argv[])
                         printf("Listing passwords\n");
                 } else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {
                         printf("Version %d.%d.%d\n", MAJOR, MINOR, PATCH);
-                } else if (argv[i] == NULL) {
-                        printf("Not an option please use pwdmgr -h for more help\n");
                 } else {
-                        printf("Not an option please use pwdmgr -h for more help\n");
+                        printf("Not a command, please use pwdmgr -h for more info\n");
+                        exit(0);
                 }
         }
 
