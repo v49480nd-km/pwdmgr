@@ -20,7 +20,7 @@
    PROFIT */
 
 
-void createPassword(char* pwd)
+void createPassword(char* name, char* pwd)
 {
         const char CHARS[53] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const char NUMS[11] = "1234567890";
@@ -42,6 +42,20 @@ void createPassword(char* pwd)
                     continue;
                 }
         }
+
+        FILE* password_file;
+        password_file = fopen("passwords", "a");
+
+        if (password_file == NULL) {
+                printf("Error storing password, exiting program\n");
+                exit(EXIT_FAILURE);
+        }
+
+        fputs(name, password_file);
+        fputs(":", password_file);
+        fputs(pwd, password_file);
+        fputc('\n', password_file);
+        fclose(password_file);
 }
 
 int main(int argc, char* argv[])
@@ -53,18 +67,33 @@ int main(int argc, char* argv[])
 
         for (int i = 1; i < argc; i++) {
                 if (strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--create") == 0) {
+                        char* name = (char*)malloc(sizeof(char) * 32);
                         char* new_pwd = (char*)malloc(sizeof(char) * PWD_SIZE);
 
-                        if (new_pwd == NULL) {
+                        if (new_pwd == NULL || name == NULL) {
                                 printf("Failure creating password, exiting program\n");
                                 exit(EXIT_FAILURE);
                         }
+                        
+                        printf("Input name for password: ");
+                        scanf("%32s", name);
 
-                        printf("Generating Password: ");
+                        if (name == NULL) {
+                                printf("Failure to retrieve name, exiting program\n");
+                                exit(EXIT_FAILURE);
+                        }
+
+                        char* name2 = (char*)realloc(name, strlen(name+1) * sizeof(char));
+
+                        if (name2 == NULL) {
+                                printf("Failure to retrieve name, exiting program\n");
+                        }
+
+                        name = name2;
                         srand(time(NULL));
-                        createPassword(new_pwd);
-                        printf("%s\n", new_pwd);
+                        createPassword(name, new_pwd);
                         free(new_pwd);
+                        free(name);
                 } else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--delete") == 0) {
                         char* name = (char*)malloc(sizeof(char) * 32);
                         printf("Input name to delete: ");
