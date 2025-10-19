@@ -4,8 +4,9 @@
 #include <time.h>
 #include <unistd.h>
 
+#define BUFFER 256
 #define MAJOR 0
-#define MINOR 2
+#define MINOR 3
 #define PATCH 0
 #define PWD_SIZE 18
 
@@ -56,6 +57,29 @@ void createPassword(char* name, char* pwd)
         fclose(password_file);
 }
 
+void listPasswords()
+{
+        char pass_file[] = "./passwords";
+        char buffer[BUFFER];
+
+        if (access(pass_file, F_OK) != 0) {
+                printf("File does not exist, please create a password to store\n");
+                exit(0);
+        }
+
+        FILE* password_file;
+        password_file = fopen(pass_file, "r");
+
+        if (password_file == NULL) {
+                printf("Failed to open password file\n");
+                exit(EXIT_FAILURE);
+        }
+
+        while (fgets(buffer, BUFFER, password_file) != NULL) {
+                printf("%s", buffer);
+        }
+}
+
 int main(int argc, char* argv[])
 {
         if (argc <= 1) {
@@ -72,7 +96,7 @@ int main(int argc, char* argv[])
                                 printf("Failure creating password, exiting program\n");
                                 exit(EXIT_FAILURE);
                         }
-                        
+                       
                         printf("Input name for password: ");
                         scanf("%32s", name);
 
@@ -143,6 +167,7 @@ int main(int argc, char* argv[])
                         );
                 } else if (strcmp(argv[i], "-l") == 0 || strcmp(argv[i], "--list") == 0) {
                         printf("Listing passwords\n");
+                        listPasswords();
                 } else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {
                         printf("Version %d.%d.%d\n", MAJOR, MINOR, PATCH);
                 } else {
