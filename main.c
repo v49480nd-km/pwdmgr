@@ -54,7 +54,7 @@ void createPassword(char* name, char* pwd)
         fputs(name, password_file);
         fputs(":", password_file);
         fputs(pwd, password_file);
-        fputc('\n', password_file);
+        fputs("\n", password_file);
         fclose(password_file);
 }
 
