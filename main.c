@@ -6,7 +6,7 @@
 
 #define MAJOR 0
 #define MINOR 1
-#define PATCH 2
+#define PATCH 3
 #define PWD_SIZE 18
 
 /* TODO
@@ -22,9 +22,9 @@
 
 void createPassword(char* pwd)
 {
-        const char CHARS[52] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const char NUMS[10] = "1234567890";
-        const char SYMBOLS[10] = "!@#$%^&*()";
+        const char CHARS[53] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const char NUMS[11] = "1234567890";
+        const char SYMBOLS[11] = "!@#$%^&*()";
         int random = rand() % 3;
 
         for (int i = 0; i < PWD_SIZE; i++) {

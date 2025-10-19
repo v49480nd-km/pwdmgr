@@ -1,0 +1,16 @@
+CC = gcc
+CFLAGS = -Wall -g -O3 -std=c17 -pipe -Wextra -Wpedantic -march=native
+RM = rm -f
+TARGET = pwdmgr
+SOURCES = main.c
+OBJECTS = $(SOURCES:.c=.o)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	$(RM) *.o $(TARGET)
+
