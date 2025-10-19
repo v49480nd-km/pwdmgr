@@ -2,12 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
-#ifdef _WIN32
-#include <windows.h>
-#else
 #include <unistd.h>
-#endif
 
 #define MAJOR 0
 #define MINOR 1
