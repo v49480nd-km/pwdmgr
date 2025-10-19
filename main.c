@@ -17,13 +17,56 @@
    ENCRYPTION
    PROFIT */
 
-
-void createPassword(char* name, char* pwd)
+void storePassword(char* name, char* pwd)
 {
+        FILE* password_file;
+        password_file = fopen("passwords", "a");
+
+        if (password_file == NULL) {
+                printf("Error storing password, exiting program\n");
+                exit(EXIT_FAILURE);
+        }
+
+        fputs(name, password_file);
+        fputs(":", password_file);
+        fputs(pwd, password_file);
+        fputs("\n", password_file);
+        fclose(password_file);
+        free(name);
+        free(pwd);
+}
+
+void createPassword()
+{
+        char* name = (char*)malloc(sizeof(char) * 32);
+        char* pwd = (char*)malloc(sizeof(char) * PWD_SIZE);
+
+        if (pwd == NULL || name == NULL) {
+                printf("Failure creating password, exiting program\n");
+                exit(EXIT_FAILURE);
+        }
+       
+        printf("Input name for password: ");
+        scanf("%32s", name);
+
+        if (name == NULL) {
+                printf("Failure to retrieve name, exiting program\n");
+                exit(EXIT_FAILURE);
+        }
+
+        char* name2 = (char*)realloc(name, strlen(name+1) * sizeof(char));
+
+        if (name2 == NULL) {
+                printf("Failure to retrieve name, exiting program\n");
+                exit(EXIT_FAILURE);
+        }
+
+        name = name2;
         const char CHARS[53] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const char NUMS[11] = "1234567890";
         const char SYMBOLS[11] = "!@#$%^&*()";
         int random = rand() % 3;
+        srand(time(NULL));
 
         for (int i = 0; i < PWD_SIZE; i++) {
                 if (random == 0) {
@@ -41,19 +84,7 @@ void createPassword(char* name, char* pwd)
                 }
         }
 
-        FILE* password_file;
-        password_file = fopen("passwords", "a");
-
-        if (password_file == NULL) {
-                printf("Error storing password, exiting program\n");
-                exit(EXIT_FAILURE);
-        }
-
-        fputs(name, password_file);
-        fputs(":", password_file);
-        fputs(pwd, password_file);
-        fputs("\n", password_file);
-        fclose(password_file);
+        storePassword(name, pwd);
 }
 
 void listPasswords()
@@ -88,33 +119,7 @@ int main(int argc, char* argv[])
 
         for (int i = 1; i < argc; i++) {
                 if (strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--create") == 0) {
-                        char* name = (char*)malloc(sizeof(char) * 32);
-                        char* new_pwd = (char*)malloc(sizeof(char) * PWD_SIZE);
-
-                        if (new_pwd == NULL || name == NULL) {
-                                printf("Failure creating password, exiting program\n");
-                                exit(EXIT_FAILURE);
-                        }
-                       
-                        printf("Input name for password: ");
-                        scanf("%32s", name);
-
-                        if (name == NULL) {
-                                printf("Failure to retrieve name, exiting program\n");
-                                exit(EXIT_FAILURE);
-                        }
-
-                        char* name2 = (char*)realloc(name, strlen(name+1) * sizeof(char));
-
-                        if (name2 == NULL) {
-                                printf("Failure to retrieve name, exiting program\n");
-                        }
-
-                        name = name2;
-                        srand(time(NULL));
-                        createPassword(name, new_pwd);
-                        free(new_pwd);
-                        free(name);
+                        createPassword();
                 } else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--delete") == 0) {
                         char* name = (char*)malloc(sizeof(char) * 32);
                         printf("Input name to delete: ");
