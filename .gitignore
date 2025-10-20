@@ -2,3 +2,4 @@ main
 pwdmgr
 *.o
 passwords
+mass_pass

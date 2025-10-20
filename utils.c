@@ -6,6 +6,31 @@
 
 #include "utils.h"
 
+void checkMasterPassword()
+{
+        char master_pass[] = "./masterpass";
+
+        if (access(master_pass, F_OK) != 0) {
+                char* master_pass = (char*)malloc(32 * sizeof(char));
+
+                testAllocation(master_pass);
+                printf("Input a master password: ");
+                scanf("%32s", master_pass);
+
+                char* master_pass2 = (char*)realloc(master_pass, strlen(master_pass+1) * sizeof(char));
+
+                testAllocation(master_pass2);
+                
+                master_pass = master_pass2;
+                FILE* mass_pass;
+                mass_pass = fopen("mass_pass", "w");
+                
+                fputs(master_pass, mass_pass);
+                fclose(mass_pass);
+                free(master_pass);
+        }
+}
+
 void createPassword()
 {
         char* name = (char*)malloc(sizeof(char) * BUFFER);

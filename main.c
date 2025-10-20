@@ -20,8 +20,11 @@ int main(int argc, char* argv[])
 
         for (int i = 1; i < argc; i++) {
                 if (strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--create") == 0) {
+                        checkMasterPassword();
                         createPassword();
                 } else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--delete") == 0) {
+                        checkMasterPassword();
+
                         char* name = (char*)malloc(sizeof(char) * 32);
 
                         printf("Input name to delete: ");
@@ -37,6 +40,8 @@ int main(int argc, char* argv[])
                         printf("Deleting: %s\n", name);
                         free(name);
                 } else if (strcmp(argv[i], "-f") == 0 || strcmp(argv[i], "--find") == 0) {
+                        checkMasterPassword();
+
                         char* name = (char*)malloc(sizeof(char) * 32);
 
                         printf("Input name to find: ");
@@ -60,6 +65,7 @@ int main(int argc, char* argv[])
                                 "-v, --version -> displays current version\n"
                         );
                 } else if (strcmp(argv[i], "-l") == 0 || strcmp(argv[i], "--list") == 0) {
+                        checkMasterPassword();
                         printf("Listing passwords\n");
                         listPasswords();
                 } else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {

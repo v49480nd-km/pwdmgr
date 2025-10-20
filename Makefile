@@ -13,5 +13,5 @@ $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) *.o $(TARGET)
+	$(RM) *.o
 
