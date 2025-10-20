@@ -8,27 +8,47 @@
 
 void checkMasterPassword()
 {
-        char master_pass[] = "./masterpass";
+        char master_pass[] = "./mass_pass";
 
         if (access(master_pass, F_OK) != 0) {
-                char* master_pass = (char*)malloc(32 * sizeof(char));
-
-                testAllocation(master_pass);
-                printf("Input a master password: ");
-                scanf("%32s", master_pass);
-
-                char* master_pass2 = (char*)realloc(master_pass, strlen(master_pass+1) * sizeof(char));
-
-                testAllocation(master_pass2);
-                
-                master_pass = master_pass2;
-                FILE* mass_pass;
-                mass_pass = fopen("mass_pass", "w");
-                
-                fputs(master_pass, mass_pass);
-                fclose(mass_pass);
-                free(master_pass);
+                setMasterPassword();
         }
+
+        char* verify_pass = (char*)malloc(32 * sizeof(char));
+
+        testAllocation(verify_pass);
+        printf("Input master password to continue: ");
+        scanf("%32s", verify_pass);
+
+        char* verify_pass2 = (char*)realloc(verify_pass, strlen(verify_pass) * sizeof(char));
+
+        testAllocation(verify_pass2);
+
+        verify_pass = verify_pass2;
+
+        FILE* mass_file;
+        mass_file = fopen("mass_pass", "r");
+        char* the_truth = (char*)malloc(32 * sizeof(char));
+
+        testAllocation(the_truth);
+
+        the_truth = fgets(the_truth, 32, mass_file);
+
+        char* truth2 = (char*)realloc(the_truth, strlen(the_truth+1) * sizeof(char));
+
+        testAllocation(truth2);
+
+        the_truth = truth2;
+
+        if (strcmp(verify_pass, the_truth) != 0) {
+                printf("You are not the real person exiting program\n");
+                free(verify_pass);
+                free(the_truth);
+                exit(0);
+        }
+
+        free(verify_pass);
+        free(the_truth);
 }
 
 void createPassword()
@@ -94,6 +114,27 @@ void listPasswords()
         while (fgets(buffer, BUFFER, password_file) != NULL) {
                 printf("%s", buffer);
         }
+}
+
+void setMasterPassword()
+{
+        char* master_pass = (char*)malloc(32 * sizeof(char));
+
+        testAllocation(master_pass);
+        printf("Input a master password: ");
+        scanf("%32s", master_pass);
+
+        char* master_pass2 = (char*)realloc(master_pass, strlen(master_pass+1) * sizeof(char));
+
+        testAllocation(master_pass2);
+        
+        master_pass = master_pass2;
+        FILE* mass_pass;
+        mass_pass = fopen("mass_pass", "w");
+        
+        fputs(master_pass, mass_pass);
+        fclose(mass_pass);
+        free(master_pass);
 }
 
 void storePassword(char* name, char* pwd)

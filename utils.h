@@ -10,6 +10,7 @@
 void checkMasterPassword();
 void createPassword();
 void listPasswords();
+void setMasterPassword();
 void storePassword(char* name, char* pwd);
 void testAllocation(char* test_var);
 
