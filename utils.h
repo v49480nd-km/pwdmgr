@@ -7,6 +7,7 @@
 #define PATCH 0
 #define PWD_SIZE 18
 
+int findPassword();
 void checkMasterPassword();
 void createPassword();
 void listPasswords();

@@ -14,6 +14,7 @@ void checkMasterPassword()
                 setMasterPassword();
         }
 
+        // get pass from user
         char* verify_pass = (char*)malloc(32 * sizeof(char));
 
         testAllocation(verify_pass);
@@ -26,6 +27,7 @@ void checkMasterPassword()
 
         verify_pass = verify_pass2;
 
+        // get pass from file
         FILE* mass_file;
         mass_file = fopen("mass_pass", "r");
         char* the_truth = (char*)malloc(32 * sizeof(char));
