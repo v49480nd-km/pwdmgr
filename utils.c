@@ -118,6 +118,29 @@ void createPassword()
         storePassword(name, pwd);
 }
 
+void deletePassword(int line_num)
+{
+        char cur_line[BUFFER];
+        int cur_num = 0;
+        FILE* old, new;
+        old = fopen("passwords", "r");
+        new = fopen("passwords2", "w");
+
+        while (fgets(cur_line, BUFFER, old) != NULL) {
+                cur_num++;
+
+                if (cur_num == line_num)
+                        continue;
+
+                fputs(cur_line, BUFFER, new);
+        }
+
+        fclose(old);
+        fclose(new);
+        remove("passwords");
+        rename("passwords2", "passwords");
+}
+
 void listPasswords()
 {
         char pass_file[] = "./passwords";

@@ -10,6 +10,7 @@
 int findPassword(char* name);
 void checkMasterPassword();
 void createPassword();
+void deletePassword(int line_num);
 void listPasswords();
 void setMasterPassword();
 void storePassword(char* name, char* pwd);
