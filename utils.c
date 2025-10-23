@@ -11,13 +11,13 @@ int findPassword(char* name)
         FILE* passes;
         passes = fopen("passwords", "r");
         char buffer[BUFFER];
-        char* file_name = (char*)malloc(32 * sizeof(char));;
         int line_number = 0;
-
-        testAllocation(file_name);
         
         while (fgets(buffer, BUFFER, passes) != NULL) {
+                char* file_name = (char*)realloc(file_name, 32 * sizeof(char));;
                 line_number++;
+
+                testAllocation(file_name);
 
                 for (size_t i = 0; i < strlen(buffer); i++) {
                         if (buffer[(int)i] == ':')
@@ -38,11 +38,11 @@ int findPassword(char* name)
                         return line_number;
                         break;
                 }
+
+                fclose(passes);
+                free(file_name);
+                return 0;
         }
-        
-        fclose(passes);
-        free(file_name);
-        return 0;
 }
 
 void checkMasterPassword()
