@@ -6,6 +6,35 @@
 
 #include "utils.h"
 
+int findPassword(char* name)
+{
+        FILE* passes;
+        passes = fopen("passwords", "r");
+        char buffer[BUFFER];
+        char file_name[32];
+        int line_number = 0;
+        
+        while (fgets(buffer, BUFFER, passes) != NULL) {
+                line_number++;
+
+                for (size_t i = 0; i < strlen(buffer); i++) {
+                        if (buffer[(int)i] == ':')
+                                break;
+
+                        file_name[(int)i] = buffer[(int)i];
+                }
+
+                if (strcmp(file_name, name) == 0) {
+                        fclose(passes);
+                        return line_number;
+                        break;
+                }
+        }
+        
+        fclose(passes);
+        return 0;
+}
+
 void checkMasterPassword()
 {
         char master_pass[] = "./mass_pass";
@@ -26,7 +55,6 @@ void checkMasterPassword()
         testAllocation(verify_pass2);
 
         verify_pass = verify_pass2;
-
         // get pass from file
         FILE* mass_file;
         mass_file = fopen("mass_pass", "r");
@@ -35,7 +63,6 @@ void checkMasterPassword()
         testAllocation(the_truth);
 
         the_truth = fgets(the_truth, 32, mass_file);
-
         char* truth2 = (char*)realloc(the_truth, strlen(the_truth+1) * sizeof(char));
 
         testAllocation(truth2);

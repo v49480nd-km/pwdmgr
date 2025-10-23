@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
                         name = name2;
 
                         printf("Finding: %s\n", name);
+                        findPassword(name);
                         free(name);
                 } else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
                         printf(
