@@ -122,7 +122,8 @@ void deletePassword(int line_num)
 {
         char cur_line[BUFFER];
         int cur_num = 0;
-        FILE* old, new;
+        FILE* old;
+        FILE* new;
         old = fopen("passwords", "r");
         new = fopen("passwords2", "w");
 
@@ -132,7 +133,7 @@ void deletePassword(int line_num)
                 if (cur_num == line_num)
                         continue;
 
-                fputs(cur_line, BUFFER, new);
+                fputs(cur_line, new);
         }
 
         fclose(old);
