@@ -42,6 +42,7 @@ int main(int argc, char* argv[])
                         checkMasterPassword();
 
                         char* name = (char*)malloc(sizeof(char) * 32);
+                        int line;
 
                         printf("Input name to find: ");
                         scanf("%32s", name);
@@ -53,8 +54,11 @@ int main(int argc, char* argv[])
                         name = name2;
 
                         printf("Finding: %s\n", name);
-                        findPassword(name);
+
+                        line = findPassword(name);
+
                         free(name);
+                        printf("%d\n", line);
                 } else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
                         printf(
                                 "-c, --create -> creates a password and stores it automatically\n"

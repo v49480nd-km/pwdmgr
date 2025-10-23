@@ -11,8 +11,10 @@ int findPassword(char* name)
         FILE* passes;
         passes = fopen("passwords", "r");
         char buffer[BUFFER];
-        char file_name[32];
+        char* file_name = (char*)malloc(32 * sizeof(char));;
         int line_number = 0;
+
+        testAllocation(file_name);
         
         while (fgets(buffer, BUFFER, passes) != NULL) {
                 line_number++;
@@ -21,17 +23,25 @@ int findPassword(char* name)
                         if (buffer[(int)i] == ':')
                                 break;
 
-                        file_name[(int)i] = buffer[(int)i];
+                        file_name[i] = buffer[i];
                 }
+
+                char* file_name2 = (char*)realloc(file_name, strlen(file_name) * sizeof(char));
+
+                testAllocation(file_name2);
+
+                file_name = file_name2;
 
                 if (strcmp(file_name, name) == 0) {
                         fclose(passes);
+                        free(file_name);
                         return line_number;
                         break;
                 }
         }
         
         fclose(passes);
+        free(file_name);
         return 0;
 }
 
