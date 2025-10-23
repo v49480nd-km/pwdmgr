@@ -3,7 +3,7 @@
 
 #define BUFFER 50
 #define MAJOR 0
-#define MINOR 3
+#define MINOR 5
 #define PATCH 0
 #define PWD_SIZE 18
 

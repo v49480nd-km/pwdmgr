@@ -5,7 +5,6 @@
 #include "utils.h"
 
 /* TODO
-   DELETE PASSWORD GIVEN NAME
    ENCRYPTION
    PROFIT */
 
