@@ -5,7 +5,6 @@ This is a password manager written in C.
 
 ### Features
 > Master password
-> Encryption
-> Local no internet access
+> Local: no internet access
 > Eventually command line, tui, and gui
 > Possible windows port if i feel like being nice
