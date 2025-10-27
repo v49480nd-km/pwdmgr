@@ -4,10 +4,6 @@
 
 #include "utils.h"
 
-/* TODO
-   ENCRYPTION
-   PROFIT */
-
 int main(int argc, char* argv[])
 {
         if (argc <= 1) {
