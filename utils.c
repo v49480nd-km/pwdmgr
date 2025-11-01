@@ -6,8 +6,7 @@
 
 #include "utils.h"
 
-int findPassword(char* name)
-{
+int findPassword(char* name) {
         char cur_line[BUFFER];
         char cur_name[strlen(name)];
         int line_num = 0;
@@ -31,8 +30,7 @@ int findPassword(char* name)
         return -1;
 }
 
-void checkMasterPassword()
-{
+void checkMasterPassword() {
         char master_pass[] = "./mass_pass";
 
         if (access(master_pass, F_OK) != 0) {
@@ -76,8 +74,7 @@ void checkMasterPassword()
         free(the_truth);
 }
 
-void createPassword()
-{
+void createPassword() {
         char* name = (char*)malloc(sizeof(char) * BUFFER);
         char* pwd = (char*)malloc(sizeof(char) * PWD_SIZE);
 
@@ -118,8 +115,7 @@ void createPassword()
         storePassword(name, pwd);
 }
 
-void deletePassword(int line_num)
-{
+void deletePassword(int line_num) {
         char cur_line[BUFFER];
         int cur_num = 0;
         FILE* old;
@@ -142,8 +138,7 @@ void deletePassword(int line_num)
         rename("passwords2", "passwords");
 }
 
-void listPasswords()
-{
+void listPasswords() {
         char pass_file[] = "./passwords";
         char buffer[BUFFER];
 
@@ -165,8 +160,7 @@ void listPasswords()
         }
 }
 
-void setMasterPassword()
-{
+void setMasterPassword() {
         char* master_pass = (char*)malloc(32 * sizeof(char));
 
         testAllocation(master_pass);
@@ -186,8 +180,7 @@ void setMasterPassword()
         free(master_pass);
 }
 
-void storePassword(char* name, char* pwd)
-{
+void storePassword(char* name, char* pwd) {
         FILE* password_file;
         password_file = fopen("passwords", "a");
 
@@ -205,8 +198,7 @@ void storePassword(char* name, char* pwd)
         free(pwd);
 }
 
-void testAllocation(char* test_var)
-{
+void testAllocation(char* test_var) {
         if (test_var == NULL) {
                 printf("ERROR, exiting program!\n");
                 exit(EXIT_FAILURE);

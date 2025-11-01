@@ -4,14 +4,14 @@
 
 #include "utils.h"
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
         if (argc <= 1) {
-                printf("Not a command, please use pwdmgr -h for more info\n");
+                printf("Not a command, please use apm -h for more info\n");
                 exit(0);
         }
 
         checkMasterPassword();
+        printf("akim's Password Manager\n");
 
         for (int i = 1; i < argc; i++) {
                 if (strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--create") == 0) {
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
                 } else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {
                         printf("Version %d.%d.%d\n", MAJOR, MINOR, PATCH);
                 } else {
-                        printf("Not a command, please use pwdmgr -h for more info\n");
+                        printf("Not a command, please use apm -h for more info\n");
                 }
         }
 
